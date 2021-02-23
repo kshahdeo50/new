@@ -47,12 +47,12 @@ pipeline {
               }
          stage("Create War File"){
            steps{
-              sh 'jar -cf target/my-app-1.0-SNAPSHOT.jar target/*.war'
+              sh 'jar -cf target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App.war'
               } 
               }  
          stage("Deploy War File"){
            steps{
-              sh "cp my-app-1.0-SNAPSHOT.war /home/ec2-user/apache-tomcat-8.5.61/webapps/"
+              sh "cp com.mycompany.app.App.war /home/ec2-user/apache-tomcat-8.5.61/webapps/"
               }   
           }
     }
