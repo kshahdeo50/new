@@ -42,7 +42,7 @@ pipeline {
               }
         stage("Create War File"){
            steps{
-             sh 'java -jar lib/com.mycompany.app.App/my-app.jar lib/*.war'
+             sh 'java -jar target/my-app.jar target/*.war'
               } 
               }
          stage("Deploy War File"){
