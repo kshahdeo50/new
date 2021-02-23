@@ -47,7 +47,7 @@ pipeline {
               }
          stage("Create War File"){
            steps{
-              sh 'jar -cf target/my-app-1.0-SNAPSHOT.jar my-app-1.0-SNAPSHOT.war'
+              sh 'jar -cf target/my-app-1.0-SNAPSHOT.jar /..war'
               } 
               }  
          stage("Deploy War File"){
