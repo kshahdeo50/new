@@ -30,6 +30,16 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
+        stage("Package"){
+           steps{
+              sh "mvn package"
+              }
+              }
+        stage("Install"){
+           steps{
+              sh "mvn install"
+              }  
+              }
         stage("Create War File"){
            steps{
               sh 'jar -cf target/project.name.jar target/*.war'
