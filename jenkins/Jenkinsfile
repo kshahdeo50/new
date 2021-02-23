@@ -40,11 +40,16 @@ pipeline {
               sh "mvn install"
               }  
               }
-        stage("Create War File"){
+        stage("Create jar File"){
+           steps{
+              sh 'java -jar target/my-app-1.0-SNAPSHOT.jar'
+              } 
+              }
+         stage("Create War File"){
            steps{
               sh 'jar -cf target/my-app-1.0-SNAPSHOT.jar target/my-app-1.0-SNAPSHOT.war'
               } 
-              }
+              }  
          stage("Deploy War File"){
            steps{
               sh "cp target/my-app-1.0-SNAPSHOT.war /home/ec2-user/apache-tomcat-8.5.61/webapps/"
