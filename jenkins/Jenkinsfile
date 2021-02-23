@@ -1,9 +1,14 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
-        }
+      agent any
+     environment {
+         PATH= "/opt/apache-maven-3.6.3/bin/:$PATH"
+         
+         }
+     stages {
+        stage("Git checkout"){
+           steps{
+              git branch: 'master', credential: url: 'https://github.com/jenkins-docs/new.git'
+              }
     }
     stages {
         stage('Build') {
