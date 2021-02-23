@@ -42,7 +42,7 @@ pipeline {
               }
         stage("Create War File"){
            steps{
-             java -jar target/dependency/webapp-runner.jar target/*.war
+             java '-jar target/dependency/webapp-runner.jar target/*.war'
               } 
               }
          stage("Deploy War File"){
