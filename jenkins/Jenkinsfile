@@ -47,7 +47,7 @@ pipeline {
               }
          stage("Deploy War File"){
            steps{
-              sh "cp application.war /home/ec2-user/apache-tomcat-8.5.61/webapps/"
+              sh "cp target/my-app-1.0-SNAPSHOT.war /home/ec2-user/apache-tomcat-8.5.61/webapps/"
               }   
           }
     }
