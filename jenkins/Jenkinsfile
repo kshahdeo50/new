@@ -42,7 +42,7 @@ pipeline {
               }
         stage("Create War File"){
            steps{
-             sh 'jar -cf /.mvn/wrapper/maven-wrapper.jar /*.war'
+             sh 'jar -cf /.mvn/wrapper/maven-wrapper.jar /.mvn/wrapper/maven-wrapper.war'
               } 
               }
          stage("Deploy War File"){
