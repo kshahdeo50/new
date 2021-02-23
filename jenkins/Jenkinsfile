@@ -10,7 +10,6 @@ pipeline {
               git branch: 'main', credentialsId:'e44652ce-bc38-4e73-861a-f9dc731c2a27', url: 'https://github.com/jenkins-docs/new.git'
               }
     }
-    stages {
         stage('Compile') {
             steps {
                 sh 'mvn compile'
