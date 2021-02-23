@@ -7,13 +7,13 @@ pipeline {
      stages {
         stage("Git checkout"){
            steps{
-              git branch: 'master', credential: url: 'https://github.com/jenkins-docs/new.git'
+              git branch: 'master', credentialsId:'e44652ce-bc38-4e73-861a-f9dc731c2a27' url: 'https://github.com/jenkins-docs/new.git'
               }
     }
     stages {
-        stage('Build') {
+        stage('compile') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                sh 'compile'
             }
         }
         stage('Test') {
