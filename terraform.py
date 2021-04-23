@@ -1,6 +1,6 @@
 import os
 def vpc():
-    terraformtfvars="""region = "ap-south-1"
+    terraformtfvars="""region = "us-east-1"
     environment_name = "dev"
     project_name = "abc"
     insclass = "db.t2.micr"
