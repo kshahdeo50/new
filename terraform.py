@@ -1,5 +1,5 @@
 import os
-def sql():
+def vpc():
     terraformtfvars="""region = "ap-south-1"
     environment_name = "dev"
     project_name = "abc"
@@ -223,8 +223,8 @@ def sql():
     file = open("vpc.tf", "w")
     file.write(assignment)
     file.close()
-def new():
-    sql()
+def mysql():
+    vpc()
     type="db.t2.micro"
     insclass=str(input("Enter project name: "))
     if insclass=='':
@@ -236,13 +236,6 @@ def new():
     fin = open("terraform.tfvars", "wt")
     fin.write(data)
     fin.close()
-    file = open("vpc.tf", "rt")
-    data = file.read()
-    data = data.replace('3306','5432' )
-    file.close()
-    file = open("vpc.tf", "wt")
-    file.write(data)
-    file.close()
     text="""resource "aws_db_instance" "defult" {
     allocated_storage = 20
     identifier = "rds-mysql"
@@ -265,8 +258,179 @@ def new():
     os.system('terraform validate')
     os.system('terraform plan')
     os.system('terraform apply')
-s=input("enter choice: ")
-if s=='1':
-  new()
-else:
-  print("wrong")
+def postgresql():
+    vpc()
+    type="db.m5.large"
+    insclass=str(input("Enter project name: "))
+    if insclass=='':
+        insclass=type
+    fin = open("terraform.tfvars", "rt")
+    data = fin.read()
+    data = data.replace('db.t2.micr', insclass)
+    fin.close()
+    fin = open("terraform.tfvars", "wt")
+    fin.write(data)
+    fin.close()
+    file = open("vpc.tf", "rt")
+    data = file.read()
+    data = data.replace('3306','5432' )
+    file.close()
+    file = open("vpc.tf", "wt")
+    file.write(data)
+    file.close()
+    text="""resource "aws_db_instance" "defult" {
+    allocated_storage = 20
+    identifier = "rds-postgresql"
+    storage_type = "gp2"
+    engine = "postgres"
+    engine_version = "11.5"
+    instance_class = "db.m5.large"
+    name = "teraform"
+    username = "cloudtechner"
+    password = "cloudtechner"
+    db_subnet_group_name =aws_db_subnet_group.subnet_group.name
+    vpc_security_group_ids =[aws_security_group.posapp.id]
+    skip_final_snapshot = true
+    }"""
+    fin=open("vpc.tf","a+")
+    fin.write(text)
+    fin.close()
+    os.system('terraform init')
+    os.system('terraform validate')
+    os.system('terraform plan')
+    os.system('terraform apply')
+def auroramysql():
+    vpc()
+    type="db.r5.large"
+    insclass=str(input("Enter project name: "))
+    if insclass=='':
+        insclass=type
+    fin = open("terraform.tfvars", "rt")
+    data = fin.read()
+    data = data.replace('db.t2.micr', insclass)
+    fin.close()
+    fin = open("terraform.tfvars", "wt")
+    fin.write(data)
+    fin.close()
+    text="""resource "aws_rds_cluster_instance" "cluster_instances" {
+    identifier         = "aurora-cluster-sql"
+    cluster_identifier = aws_rds_cluster.default.id
+    instance_class     = "db.r5.large"
+    engine             = aws_rds_cluster.default.engine
+    engine_version     = aws_rds_cluster.default.engine_version
+    }
+    resource "aws_rds_cluster" "default" {
+    cluster_identifier      = "aurora-mysql"
+    engine                  = "aurora-mysql"
+    engine_version          = "5.7.mysql_aurora.1.22.2"
+    availability_zones      = ["ap-south-1a", "ap-south-1b"]
+    database_name           = "mydb"
+    master_username         = "cloudtechner"
+    master_password         = "cloudtechner"
+    db_subnet_group_name =aws_db_subnet_group.subnet_group.name
+    vpc_security_group_ids =[aws_security_group.ausapp.id]
+    skip_final_snapshot = true
+    }"""
+    fin=open("vpc.tf","a+")
+    fin.write(text)
+    fin.close()
+    os.system('terraform init')
+    os.system('terraform validate')
+    os.system('terraform plan')
+    os.system('terraform apply')
+def aurorapostgresql():
+    vpc()
+    type="db.r5.large"
+    insclass=str(input("Enter project name: "))
+    if insclass=='':
+        insclass=type
+    fin = open("terraform.tfvars", "rt")
+    data = fin.read()
+    data = data.replace('db.t2.micr', insclass)
+    fin.close()
+    fin = open("terraform.tfvars", "wt")
+    fin.write(data)
+    fin.close()
+    file = open("vpc.tf", "rt")
+    data = file.read()
+    data = data.replace('3306','5432' )
+    file.close()
+    file = open("vpc.tf", "wt")
+    file.write(data)
+    file.close()
+    text="""resource "aws_rds_cluster_instance" "cluster_instances" {
+    identifier         = "aurora-cluster-demo"
+    cluster_identifier = aws_rds_cluster.default.id
+    instance_class     = "db.r5.large"
+    engine             = aws_rds_cluster.default.engine
+    engine_version     = aws_rds_cluster.default.engine_version
+    }
+    resource "aws_rds_cluster" "default" {
+    cluster_identifier      = "aurora-postgre"
+    engine                  = "aurora-postgresql"
+    engine_version          = "11.9"
+    availability_zones      = ["ap-south-1a", "ap-south-1b"]
+    database_name           = "mydb"
+    master_username         = "cloudtechner"
+    master_password         = "cloudtechner"
+    db_subnet_group_name =aws_db_subnet_group.subnet_group.name
+    vpc_security_group_ids =[aws_security_group.auposapp.id]
+    skip_final_snapshot = true
+    }"""
+    fin=open("vpc.tf","a+")
+    fin.write(text)
+    fin.close()
+    os.system('terraform init')
+    os.system('terraform validate')
+    os.system('terraform plan')
+    os.system('terraform apply')    
+i=1
+while i=='1':
+    print(" ")
+    print("Choose which type instance you wnat to create")
+    print("To create RDS instance, ENTER 1")
+    print("To create AURORA instance, ENTER 2")
+    print("To exit, ENTER 0")
+    s=input("Enter your choice: ")
+    if s=='1':
+        z=1
+        while z==1:
+            print(" ")
+            print("Choose which type ENGINE you want to use for RDS instance")
+            print("To choose MYSQL Engine, ENTER 1")
+            print("To choose POSTGRESQL Engine, ENTER 2")
+            print("To exit, ENTER 0")
+            print(" ")
+            engine=input("Enter your choice: ")
+            if engine=='1':
+                mysql()
+            elif engine=='2':
+                postgresql()
+            elif engine=='0':
+                z=0
+            else:
+                print("Invalid choice, Enter Valid option")
+    elif s=='2':
+        x=1
+        while x==1:
+            print(" ")
+            print("Choose which type ENGINE you wnat to use for AURORA instance")
+            print("To choose MYSQL Engine, ENTER 1")
+            print("To choose POSTGRESQL, ENTER 2")
+            print("To exit, ENTER 0")
+            print(" ")
+            engine=input("Enter your choice: ")
+            if engine=='1':
+                auroramysql()
+            elif engine=='2':
+                aurorapostgresql()
+            elif engine=='0':
+                x=0
+            else:
+                print("Invalid choice, Enter Valid option")
+    elif s=='0':
+        i=0
+    else:
+        print("Invalid choice, Enter Valid option")
+    
+    
