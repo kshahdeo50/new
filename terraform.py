@@ -45,7 +45,7 @@ def vpc():
     vpc_id     = aws_vpc.default.id
     cidr_block = "10.0.5.0/24"
     map_public_ip_on_launch = "true"
-    availability_zone = "ap-south-1a"
+    availability_zone = "us-east-1a"
     tags = {
     Name = "public-sub"
        }
@@ -85,7 +85,7 @@ def vpc():
     resource "aws_subnet" "main" {
       vpc_id     = aws_vpc.default.id
       cidr_block = "10.0.1.0/24"
-      availability_zone = "ap-south-1a"
+      availability_zone = "us-east-1a"
       tags = {
         Name = "app-subnet-az-1"
         }
@@ -97,7 +97,7 @@ def vpc():
     resource "aws_subnet" "pvt" {
       vpc_id     = aws_vpc.default.id
       cidr_block = "10.0.0.0/24"
-      availability_zone = "ap-south-1b"
+      availability_zone = "us-east-1b"
       tags = {
          Name = "app-subnet-az-2"
          }
@@ -109,7 +109,7 @@ def vpc():
     resource "aws_subnet" "db" {
       vpc_id     = aws_vpc.default.id
       cidr_block = "10.0.3.0/24"
-      availability_zone = "ap-south-1a"
+      availability_zone = "us-east-1a"
       tags = {
          Name = "db-subnet-az-1"
          }
@@ -121,7 +121,7 @@ def vpc():
     resource "aws_subnet" "rds" {
       vpc_id     = aws_vpc.default.id
       cidr_block = "10.0.2.0/24"
-      availability_zone = "ap-south-1b"
+      availability_zone = "us-east-1b"
       tags = {
          Name = "db-subnet-az-2"
          }
