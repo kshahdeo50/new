@@ -3,6 +3,7 @@ def sql():
     terraformtfvars="""region = "ap-south-1"
     environment_name = "dev"
     project_name = "abc"
+    insclass = "db.t2.micr"
     """
     file = open("terraform.tfvars", "w")
     file.write(terraformtfvars)
@@ -24,6 +25,7 @@ def sql():
     variables="""variable "region" {}
     variable "environment_name" {}
     variable "project_name" {}
+    var "insclass" {}
     """
     file = open("variables.tf", "w")
     file.write(variables)
@@ -223,13 +225,31 @@ def sql():
     file.close()
 def new():
     sql()
+    type="db.t2.micro"
+    insclass=str(input("Enter project name: "))
+    if insclass=='':
+        insclass=type
+    fin = open("terraform.tfvars", "rt")
+    data = fin.read()
+    data = data.replace('db.t2.micr', insclass)
+    fin.close()
+    fin = open("terraform.tfvars", "wt")
+    fin.write(data)
+    fin.close()
+    file = open("vpc.tf", "rt")
+    data = file.read()
+    data = data.replace('3306','5432' )
+    file.close()
+    file = open("vpc.tf", "wt")
+    file.write(data)
+    file.close()
     text="""resource "aws_db_instance" "defult" {
     allocated_storage = 20
     identifier = "rds-mysql"
     storage_type = "gp2"
     engine = "mysql"
     engine_version = "5.7"
-    instance_class = "db.t2.micro"
+    instance_class = var.insclass
     name = "teraform"
     username = "cloudtechner"
     password = "cloudtechner"
