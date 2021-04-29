@@ -42,11 +42,11 @@ def vpc():
     }
     resource "aws_subnet" "pub" {
     vpc_id     = aws_vpc.default.id
-    cidr_block = "10.0.5.0/24"
+    cidr_block = var.pub_sub_cidr
     map_public_ip_on_launch = "true"
-    availability_zone = "us-east-1a"
+    availability_zone = var.pub_sub_az
     tags = {
-    Name = "public-sub"
+    Name = var.pub_sub_name
        }
     }
     output "pub_id" {
@@ -56,7 +56,7 @@ def vpc():
     resource "aws_internet_gateway" "igw" {
     vpc_id     = aws_vpc.default.id
     tags = {
-    Name = "custom-igw"
+    Name = var.igw_name
        }
     }
     output "igw_id" {
@@ -70,7 +70,7 @@ def vpc():
           gateway_id = aws_internet_gateway.igw.id
           }
        tags = {
-           Name = "pub-route"
+           Name = var.pub_route_name
               }
     }
     output "pub_rid" {
@@ -81,65 +81,65 @@ def vpc():
       subnet_id      = aws_subnet.pub.id
       route_table_id = aws_route_table.pub_route.id
     }
-    resource "aws_subnet" "main" {
+    resource "aws_subnet" "app" {
       vpc_id     = aws_vpc.default.id
-      cidr_block = "10.0.1.0/24"
-      availability_zone = "us-east-1a"
+      cidr_block = var.app_sub_cidr
+      availability_zone = var.app_sub_az
       tags = {
-        Name = "app-subnet-az-1"
+        Name = var.app_sub_name
         }
     }
     output "sub_id" {
       description = "id of public subnet"
-      value       = aws_subnet.main.id
+      value       = aws_subnet.app.id
     }
-    resource "aws_subnet" "pvt" {
+    resource "aws_subnet" "app2" {
       vpc_id     = aws_vpc.default.id
-      cidr_block = "10.0.0.0/24"
-      availability_zone = "us-east-1b"
+      cidr_block = var.app2_sub_cidr
+      availability_zone = var.app2_sub_az
       tags = {
-         Name = "app-subnet-az-2"
+         Name = var.app2_sub_name
          }
     }
     output "pvt_id" {
       description = "Id of private subnet"
-      value       = aws_subnet.pvt.id
+      value       = aws_subnet.app2.id
       }
     resource "aws_subnet" "db" {
       vpc_id     = aws_vpc.default.id
-      cidr_block = "10.0.3.0/24"
-      availability_zone = "us-east-1a"
+      cidr_block = var.db_sub_cidr
+      availability_zone = var.db_sub_az
       tags = {
-         Name = "db-subnet-az-1"
+         Name = var.db_sub_name
          }
     }
     output "subrds_id" {
       description = "Id of rds private subnet"
       value       = aws_subnet.db.id
     }
-    resource "aws_subnet" "rds" {
+    resource "aws_subnet" "db2" {
       vpc_id     = aws_vpc.default.id
-      cidr_block = "10.0.2.0/24"
-      availability_zone = "us-east-1b"
+      cidr_block = var.db2_sub_cidr
+      availability_zone = var.db2_sub_az
       tags = {
-         Name = "db-subnet-az-2"
+         Name = var.db2_sub_name
          }
     }
     output "subrdss_id" {
       description = "Id of rds private subnet"
-      value       = aws_subnet.rds.id
+      value       = aws_subnet.db2.id
     }
     resource "aws_eip" "e-ip" {
       vpc              = true
       tags = {
-         Name = "eip"
+         Name = var.eip_name
          }
     }
     resource "aws_nat_gateway" "gw" {
       allocation_id = aws_eip.e-ip.id
       subnet_id     = aws_subnet.pub.id
       tags = {
-         Name = "gw NAT"
+         Name = var.nat_name
          }
     }
     resource "aws_route_table" "pvt_route" {
@@ -149,7 +149,7 @@ def vpc():
         nat_gateway_id = aws_nat_gateway.gw.id
     }
     tags = {
-       Name = "pvt-route"
+       Name = var.pvt_route_name
        }
     }
     output "pvt_rid" {
@@ -177,11 +177,11 @@ def vpc():
       subnet_ids  = [aws_subnet.db.id,aws_subnet.rds.id]
       description = "subnet group for rds"
       tags = {
-         Name = "subnetgroup"
+         Name = var.subnetgroup_name
          }
     }
     resource "aws_security_group" "app" {
-      name = "app-sg"
+      name = var.app_sg_name
       vpc_id = aws_vpc.default.id
       ingress {
           from_port   = 8080
@@ -196,15 +196,15 @@ def vpc():
         cidr_blocks = ["0.0.0.0/0"]
       }
       tags = {
-        Name = "app-sg"
+        Name = var.app_sg_name
       }
     }
     resource "aws_security_group" "sqlapp" {
-      name = "db-sg"
+      name = var.db_sg_name
       vpc_id = aws_vpc.default.id
       ingress {
-          from_port   = 3306
-          to_port     = 3306
+          from_port   = var.db_port
+          to_port     = var.db_port
           protocol    = "tcp"
           security_groups = [aws_security_group.app.id]
       }
@@ -215,7 +215,7 @@ def vpc():
         cidr_blocks = ["0.0.0.0/0"]
       }
       tags = {
-        Name = "db-sg"
+        Name = var.db_sg_name
       }
     }
     """
