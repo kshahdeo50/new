@@ -1,0 +1,32 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+{% block main-content %}
+
+<h1 class = "title" >Tabs</h1>
+<div class= "tabContainer">
+  <div class="buttonContainer">
+   <button onclick="showPanel(0,'#f44336')" >Tab1</button>
+   <button onclick="showPanel(1,'#f4caf50')" >Tab2</button>
+   <button onclick="showPanel(2,'#2196f3')" >Tab3</button>
+   <button onclick="showPanel(3,'#f44336')" >Tab4</button>
+  </div>
+<div class="tabPanel"> Tab1:Content
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+</div>
+<div class="tabPanel"> Tab2:Content</div>
+<div class="tabPanel"> Tab3:Content</div>
+<div class="tabPanel"> Tab4:Content</div>
+</div>
+{% endblock main-content %}

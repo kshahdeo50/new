@@ -1,0 +1,26 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+    <h3>Welcome Kuldeep</h3>
+
+    <h1 class="text-center mb-5">RDS Instance</h1>
+    <div class="row" id="mydiv">
+     <div class="col-sm-8 offset-sm-1">
+      <form method="post" action="">
+       {% csrf_token %}
+       {% for fm in form %}
+       <div class='form-group col-lg-6 mb-3'>
+         {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+         </div>
+        {% endfor %}
+        <div class = "col-12 mt-3">
+          <button type="submit" name="save_add" value="True" class = "btn btn-primary mb-3">Next</button>
+          <input type=button value="Back" class="btn btn-primary mb-3" onClick="javascript:history.go(-1);">
+        </div>
+       </form>
+     </div>
+    </div>  
+</div>
+{% endblock main-content %}

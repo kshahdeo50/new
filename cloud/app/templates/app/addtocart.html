@@ -1,0 +1,137 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Result{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <h1 class="text-center mb-5">Result</h1>
+  <div class="col-sm-8">
+  <div class="card">
+   <div class="card-body">
+    <h3>Services To Be Created</h3> 
+    <hr class="text-muted">
+    <div class="row my-5">
+     <div class="col-sm-3 text-center align-self-center"><img src="{% static 'app/images/banner/proj.jpg'%}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+     <div class="col-sm-9">
+      <div>
+       <h5>Project Information</h5>
+       <p>
+         Project Name:            {{proj.Project_Name}}<br>
+         Environment Name    :   {{proj.Environment_Name}}<br>
+         Region      :          {{proj.region}}<br>
+         VPC_CIDR    :           {{proj.vpc_cidr}}<br>
+         Email       :          {{budo.email}}<br>
+         Budget      :          {{budo.budget}}<br>
+         VPC         :         {{proj.Project_Name}}_{{proj.Environment_Name}}_vpc
+
+         
+  </p>
+  <a href="{% url 'mobile' %}" class="btn btn-primary mb-3">Edit</a>
+      </div>
+     </div>
+      <hr class = "text-muted">
+       <div class="row my-5">
+      <div class="col-sm-3 text-center align-self-center"><img src="{%static 'app/images/banner/iam.png'%}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+      <div class="col-sm-9">
+       <div>
+        <h5>IAM</h5>
+        <p> <br>
+          IAM Username : {{iamo.username}}<br>
+          IAM Group: {{iamo.groupname}}<br>
+        </p>
+        <a href="{% url 'orders' %}" class="btn btn-primary mb-3">Edit</a>
+       </div>
+      </div>
+     </div>
+   </div>
+   <hr class = "text-muted">
+       <div class="row my-5">
+      <div class="col-sm-3 text-center align-self-center"><img src="{%static 'app/images/banner/vpc.png'%}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+      <div class="col-sm-9">
+       <div>
+        <h5>VPC</h5>
+        <p> <br>
+          VPC_CIDR : {{proj.vpc_cidr}}<br>
+          VPC_Name : {{proj.Project_Name}}_{{proj.Environment_Name}}_VPC<br>
+        </p>
+       </div>
+      </div>
+     </div>
+   </div>
+    <hr class = "text-muted">
+    <div class="row my-5">
+      <div class="col-sm-3 text-center align-self-center"><img src="{% static 'app/images/banner/ec2.jpeg'%}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+      <div class="col-sm-9">
+       <div>
+        <h5>EC2</h5>
+         <p>
+          Key Name:         {{proj.Project_Name}}_{{proj.Environment_Name}}_key <br> 
+          Instance Name:    {{proj.Project_Name}}_{{proj.Environment_Name}}_instance <br>
+          Subnet(Private):  {{proj.Project_Name}}_{{proj.Environment_Name}}_app-az-1<br>
+          subnet(Private):  {{proj.Project_Name}}_{{proj.Environment_Name}}_app-az-2<br>
+        </p>
+       </div>
+      </div>
+     </div>
+   </div>
+     <hr class = "text-muted">
+     <div class="row my-5">
+      <div class="col-sm-3 text-center align-self-center"><img src="{% static 'app/images/banner/apa.png'%}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+      <div class="col-sm-9">
+       <div>
+        <h5>ALB</h5>
+        <p><p>An Alb will be created with</p>
+          ABL Name : {{proj.Project_Name}}_{{proj.Environment_Name}}_ALB<br>
+          Subnet(public) : {{proj.Project_Name}}_{{proj.Environment_Name}}_web-az-1<br>
+          subnet(public) : {{proj.Project_Name}}_{{proj.Environment_Name}}_web-az-2<br>
+
+        </p>
+       </div>
+      </div>
+     </div>
+    <hr class="text-muted">
+    <div class="row my-5">
+     <div class="col-sm-3 text-center align-self-center"> <img src="{% static 'app/images/banner/rds.png'%}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"></div>
+     <div class="col-sm-9"> 
+      <div>
+       <h5>RDS</h5>
+       <p> 
+        VPC: {{proj.Project_Name}}_{{proj.Environment_Name}}_Vpc <br>
+        Subnet(Private) : {{proj.Project_Name}}_{{proj.Environment_Name}}_db-az-1<br>
+        subnet(Private)  : {{proj.Project_Name}}_{{proj.Environment_Name}}_db-az-2<br>
+        RDS Type: {{rdso.rds_type}}<br>
+        RDS Usrname : {{rdso.rds_username}}<br>
+        RSD Password : ***********
+            </p>
+            <a href="{% url 'product-detail' %}" class="btn btn-primary mb-3">Edit</a>
+      </div>
+     </div>
+    </div>
+   </div>
+   </div>
+  </div>
+
+  <div class="col-sm-4">
+   </div>
+  </div>
+  
+ </div>
+</div>
+<div class="container">
+ <div class="row">
+  <div class="col-sm-8">
+   <div class="card">
+  </div>
+  </div>
+ </div>
+</div>
+
+ <div class = "col-12 mt-3 position-relative">
+  <input type=button value="Back" class="btn btn-primary mb-3" onClick="javascript:history.go(-1);">
+  <a href="{% url 'product-detail' %}" class="btn btn-primary mb-3">Edit</a>
+  <form action="/function">
+    <button id = "stat-btn" class="btn btn-primary mb-3 position-absolute bottom-0 end-0">Create</button>
+    </form>
+
+</div>
+{% endblock main-content %}

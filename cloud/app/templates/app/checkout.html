@@ -1,0 +1,30 @@
+
+
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}VPC{% endblock title %}
+{% block main-content %}
+<h2>IAM</h2>
+<div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">User_Name For IAM</span>
+    <input type="text" class="form-control" placeholder="username" aria-label="username" aria-describedby="basic-addon1">
+  </div>
+  
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon2">Group</span>
+    <input type="text" class="form-control" placeholder="Read_Only" aria-placeholder="Admin" aria-label="Instance Name" aria-describedby="basic-addon2">
+  </div>
+     
+
+  <div class="col-sm-2 border-end">
+    <ul class="list-unstyled">
+     <li class="d-grid"><a href="{% url 'orders' %}" class="btn btn-primary">Next</a></li>
+    </ul>
+   </div>
+
+   <div class="col-sm-2 border-end">
+    <ul class="list-unstyled">
+     <li class="d-grid"><a href="{% url 'orders' %}" class="btn btn-primary">Prev</a></li>
+    </ul>
+   </div>
+  {% endblock main-content %}

@@ -1,0 +1,87 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Projct{% endblock title %}
+{% block main-content %}
+<h1 class = "title" >Enter Project Related Information</h1>
+<div class= "tabContainer">
+  <div class="buttonContainer">
+   <button onclick="showPanel(0,'#C0C0C0')" >Project</button>
+   <button onclick="showPanel(1,'#C0C0C0')" >Budget</button>
+   <button onclick="showPanel(2,'#C0C0C0')" >IAM</button>
+   <button onclick="showPanel(3,'#C0C0C0')" >RDS</button>
+  </div>
+<div id ="project" class="tabPanel">
+    <h1>Project</h1>
+      <div class="row">
+        <div class="col-sm-8 offset-sm-1">
+         <form method="post" action="">
+          {% csrf_token %}
+          {% for fm in form %}
+          <div class='form-group col-lg-6 mb-3'>
+            {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+            </div>
+           {% endfor %}
+         </form>
+         <ul class="nav nav-tabs">
+          <li><a data-toggle="tab" href="#budget">Next</a></li>
+        </ul>
+         </div>
+         </div>
+</div>
+<div id ="budget" class="tabPanel">
+
+  <h1>Budget</h1>
+      <div class="row">
+        <div class="col-sm-8 offset-sm-1">
+         <form method="post" action="">
+          {% csrf_token %}
+          {% for fm in form2 %}
+          <div class='form-group col-lg-6 mb-3'>
+            {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+            </div>
+           {% endfor %}
+         </form>
+         
+         </div>
+         </div>
+
+
+</div>
+<div id = "iam" class="tabPanel">
+  <h1>IAM</h1>
+      <div class="row">
+        <div class="col-sm-8 offset-sm-1">
+         <form method="post" action="">
+          {% csrf_token %}
+          {% for fm in form3 %}
+          <div class='form-group col-lg-6 mb-3'>
+            {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+            </div>
+           {% endfor %}
+         </form>
+         
+         </div>
+         </div>
+</div>
+<div id ="rds" class="tabPanel">
+  <h1>RDS (Optional)</h1>
+      <div class="row">
+        <div class="col-sm-8 offset-sm-1">
+         <form method="post" action="">
+          {% csrf_token %}
+          {% for fm in form4 %}
+          <div class='form-group col-lg-6 mb-3'>
+            {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+            </div>
+           {% endfor %}
+         </form>
+         <a href="{% url 'add-to-cart' %}" class="btn btn-primary mb-3">Submit</a>
+         </div>
+         </div>
+</div>
+<a href="{% url 'add-to-cart' %}" class="btn btn-primary mb-3">Submit</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% endblock main-content %}

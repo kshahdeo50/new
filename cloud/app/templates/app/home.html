@@ -1,0 +1,40 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block banner_slider %}
+<!--Banner Slider-->
+ <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'app/images/banner/apa.png' %}" class="d-block w-100" alt="Apache Webserver"> 
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'app/images/banner/ec2.jpeg' %}" class="d-block w-100" alt="EC2">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'app/images/banner/iam.png' %}" class="d-block w-100" alt="IAM">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'app/images/banner/rds.png' %}" class="d-block w-100" alt="RDS">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</div>
+<!-- End Banner Slider -->
+{% endblock banner_slider %}
+
+{% block main-content %}
+<div class="description">
+  <h1>Welcome to the Landing Page!</h1>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum quam odio, quis placerat ante luctus eu. Sed aliquet dolor id sapien rutrum, id vulputate quam iaculis. Suspendisse consectetur mi id libero fringilla, in pharetra sem ullamcorper.</p>
+</div>
+{% endblock main-content %}
+

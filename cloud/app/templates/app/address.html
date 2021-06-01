@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Data{% endblock title %}
+{% block main-content %}
+<table class="table">
+    <tr>
+        <th>Project Name</th>
+        <th>Environment Name</th>
+        <th>Region</th>
+        <th>VPC_CIDR</th>
+        <th>RDS Username</th>
+        <th>RDS Type</th>
+        <th>IAM Username</th>
+        <th>IAM Groupname</th>
+        <th>Budjet</th>
+        <th>Email</th>
+        <th>Date</th>
+
+    </tr>
+    {% for item in finalo %}
+    <tr> 
+        <td>{{ item.Project_Name }}</td>
+        <td>{{ item.Environment_Name }}</td>\
+        <td>{{item.Region }}</td>
+        <td>{{item.VPC_CIDR }}</td>
+        <td>{{item.RDS_Username }}</td>
+        <td>{{ item.RDS_Type}}</td>
+        <td>{{item.IAM_Username }}</td>
+        <td>{{item.IAM_Groupname }}</td>
+        <td>{{item.Budget}}</td>
+        <td>{{item.Email }}</td>
+        <td>{{item.date }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock main-content %}
