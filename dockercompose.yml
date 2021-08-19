@@ -17,7 +17,7 @@ services:
   gateway:
     image: traefik:v2.0.5
     ports:
-      - "8080:8080" # HTTP exposed
+      - "9100:9100" # HTTP exposed
       - "8081:8081" # HTTP Administration exposed
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
